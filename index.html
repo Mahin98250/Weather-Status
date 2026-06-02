@@ -4,30 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Status</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-
-    <h1>🌦 Weather Status</h1>
-
-    <div class="search-box">
-        <input type="text" id="cityInput" placeholder="Enter city name">
-        <button onclick="getWeather()">Search</button>
-        <button onclick="getCurrentLocation()">📍</button>
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
     </div>
 
-    <div id="currentWeather"></div>
+    <main class="app">
 
-    <h2>Hourly Forecast</h2>
-    <div id="hourlyForecast" class="hourly"></div>
+        <!-- Header -->
+        <header class="top-bar">
+            <h1>Weather</h1>
 
-    <h2>7-Day Forecast</h2>
-    <div id="dailyForecast"></div>
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="Search city..."
+                >
 
-</div>
+                <button onclick="getWeather()">
+                    Search
+                </button>
 
-<script src="script.js"></script>
+                <button onclick="getCurrentLocation()">
+                    📍
+                </button>
+            </div>
+        </header>
+
+        <!-- Current Weather -->
+        <section class="hero-card glass">
+
+            <div class="location">
+                <h2 id="cityName">Jamnagar</h2>
+                <p id="condition">Clear Sky</p>
+            </div>
+
+            <div class="hero-center">
+
+                <div
+                    id="weatherIcon"
+                    class="weather-icon"
+                >
+                    ☀️
+                </div>
+
+                <div
+                    id="temperature"
+                    class="temperature"
+                >
+                    32°
+                </div>
+
+                <div
+                    id="highLow"
+                    class="high-low"
+                >
+                    H:35° L:27°
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Hourly Forecast -->
+        <section class="glass section-card">
+
+            <div class="section-title">
+                Hourly Forecast
+            </div>
+
+            <div
+                id="hourlyForecast"
+                class="hourly-scroll"
+            >
+            </div>
+
+        </section>
+
+        <!-- Weather Metrics -->
+        <section class="metrics-grid">
+
+            <div class="glass metric-card">
+                <span class="metric-label">
+                    Humidity
+                </span>
+
+                <span
+                    id="humidity"
+                    class="metric-value"
+                >
+                    --
+                </span>
+            </div>
+
+            <div class="glass metric-card">
+                <span class="metric-label">
+                    Wind
+                </span>
+
+                <span
+                    id="wind"
+                    class="metric-value"
+                >
+                    --
+                </span>
+            </div>
+
+            <div class="glass metric-card">
+                <span class="metric-label">
+                    UV Index
+                </span>
+
+                <span
+                    id="uv"
+                    class="metric-value"
+                >
+                    --
+                </span>
+            </div>
+
+            <div class="glass metric-card">
+                <span class="metric-label">
+                    Feels Like
+                </span>
+
+                <span
+                    id="feelsLike"
+                    class="metric-value"
+                >
+                    --
+                </span>
+            </div>
+
+        </section>
+
+        <!-- Daily Forecast -->
+        <section class="glass section-card">
+
+            <div class="section-title">
+                10-Day Forecast
+            </div>
+
+            <div
+                id="dailyForecast"
+                class="daily-container"
+            >
+            </div>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            Powered by Open-Meteo
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
