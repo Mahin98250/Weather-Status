@@ -1,1 +1,86 @@
-body{font-family:Arial,sans-serif;background:#0f172a;color:white;margin:0;padding:20px}.container{max-width:800px;margin:auto}.search{display:flex;gap:10px}input,button{padding:10px;border-radius:8px;border:none}button{cursor:pointer}.card{background:#1e293b;padding:15px;border-radius:12px;margin-top:15px}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+input{
+    padding:12px;
+    width:250px;
+    border:none;
+    border-radius:10px;
+}
+
+button{
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.card{
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(12px);
+    border-radius:15px;
+    padding:20px;
+    margin-top:15px;
+}
+
+.hourly{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px 0;
+}
+
+.hour-card{
+    min-width:100px;
+    background:rgba(255,255,255,0.1);
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.day-card{
+    display:flex;
+    justify-content:space-between;
+    background:rgba(255,255,255,0.1);
+    margin-top:10px;
+    padding:15px;
+    border-radius:12px;
+}
+
+.temp{
+    font-size:48px;
+    font-weight:bold;
+}
+
+.weather-icon{
+    font-size:60px;
+}
