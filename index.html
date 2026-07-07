@@ -3,192 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <title>Weather</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
+    <meta name="description" content="Modern Weather App with Glassmorphism Design">
+    <meta name="theme-color" content="#667eea">
+    <title>Weather Status - Real-time Weather</title>
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@latest"></script>
 </head>
 <body>
     <!-- Animated Background -->
-    <div class="weather-background">
+    <div class="weather-bg">
         <div class="bg-gradient"></div>
-        <div class="bg-particles"></div>
-        <div class="bg-clouds">
-            <div class="cloud" style="--delay: 0s"></div>
-            <div class="cloud" style="--delay: 15s"></div>
-            <div class="cloud" style="--delay: 30s"></div>
-        </div>
         <div class="rain-container"></div>
         <div class="snow-container"></div>
     </div>
 
-    <!-- Main App Container -->
-    <div class="app-container">
-        
+    <!-- Main App -->
+    <div class="app-wrapper">
         <!-- Header -->
         <header class="app-header">
-            <div class="header-title-group">
-                <h1 class="app-title">Weather</h1>
-            </div>
+            <h1 class="logo">🌤️ Weather</h1>
             <div class="header-actions">
-                <div class="search-box glass-input">
-                    <input 
-                        type="text" 
-                        id="cityInput" 
-                        class="search-input"
-                        placeholder="Search city..." 
-                        aria-label="Search for a city"
-                    >
-                    <button 
-                        class="search-submit glass-button"
-                        onclick="getWeather()"
-                        aria-label="Search"
-                    >
-                        <span class="button-icon">↗</span>
-                    </button>
+                <div class="search-box">
+                    <input type="text" id="cityInput" placeholder="Search city..." maxlength="50" aria-label="Search for a city">
+                    <button id="searchBtn" class="btn-icon" aria-label="Search">↗</button>
                 </div>
-                <button 
-                    class="location-button glass-button-icon"
-                    onclick="getCurrentLocation()"
-                    aria-label="Get current location"
-                >
-                    <span class="button-icon">📍</span>
-                </button>
+                <button id="locBtn" class="btn-icon" aria-label="Get my location">📍</button>
+                <button id="themeBtn" class="btn-icon" aria-label="Toggle theme">🌙</button>
             </div>
         </header>
 
-        <!-- Main Weather Section -->
-        <section class="hero-section glass-card">
-            <div class="hero-location">
-                <h2 id="cityName" class="location-name">Loading...</h2>
-                <p id="condition" class="weather-condition">Fetching weather...</p>
-            </div>
-            
-            <div class="hero-temperature">
-                <div id="weatherIcon" class="weather-icon-large">☀️</div>
-                <div class="temperature-display">
-                    <div id="temperature" class="main-temperature">--°</div>
-                    <div id="feelsLike" class="feels-like-temp">Feels like --°</div>
-                </div>
-            </div>
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Fetching weather...</p>
+        </div>
 
-            <div class="hero-stats">
-                <div id="highLow" class="high-low-display">H:-- L:--</div>
-                <div class="hero-quick-stats">
-                    <div class="stat-mini">
-                        <span class="stat-label">Humidity</span>
-                        <span id="humidity-quick" class="stat-value">--%</span>
-                    </div>
-                    <div class="stat-mini">
-                        <span class="stat-label">Wind</span>
-                        <span id="wind-quick" class="stat-value">-- km/h</span>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero glass-card">
+                <div class="hero-location">
+                    <h2 id="cityName">Loading...</h2>
+                    <p id="condition">--</p>
+                </div>
+                <div class="hero-temp">
+                    <span id="weatherIcon" class="weather-icon">☀️</span>
+                    <div class="temp-group">
+                        <div id="temperature" class="temp-main">--°</div>
+                        <small id="feelsLike">--°</small>
                     </div>
                 </div>
-            </div>
-        </section>
+                <div class="hero-stats">
+                    <span id="highLow">H:-- L:--</span>
+                    <div class="mini-stats">
+                        <span>💧 <b id="humidity-quick">--%</b></span>
+                        <span>💨 <b id="wind-quick">--</b></span>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Hourly Forecast -->
-        <section class="forecast-section glass-card">
-            <div class="section-header">
-                <h3 class="section-title">Hourly</h3>
-            </div>
-            <div id="hourlyForecast" class="hourly-scroll">
-            </div>
-        </section>
+            <!-- Hourly Forecast -->
+            <section class="glass-card">
+                <h3>Hourly Forecast</h3>
+                <div id="hourlyForecast" class="forecast-scroll"></div>
+            </section>
 
-        <!-- Temperature Chart -->
-        <section class="chart-section glass-card">
-            <div class="section-header">
-                <h3 class="section-title">Temperature Trend</h3>
-            </div>
-            <div class="chart-container">
-                <canvas id="tempChart"></canvas>
-            </div>
-        </section>
+            <!-- Metrics Grid -->
+            <section class="metrics-grid">
+                <div class="metric-card glass-card">
+                    <small>Feels Like</small>
+                    <p id="feelsLike-full">--°</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>Humidity</small>
+                    <p id="humidity">--%</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>Wind Speed</small>
+                    <p id="wind">--</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>Pressure</small>
+                    <p id="pressure">--</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>Visibility</small>
+                    <p id="visibility">--</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>UV Index</small>
+                    <p id="uv">--</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>🌅 Sunrise</small>
+                    <p id="sunrise">--:--</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>🌇 Sunset</small>
+                    <p id="sunset">--:--</p>
+                </div>
+                <div class="metric-card glass-card">
+                    <small>Air Quality</small>
+                    <p id="aqi">--</p>
+                </div>
+            </section>
 
-        <!-- Metrics Grid -->
-        <section class="metrics-section">
-            <div class="metrics-row">
-                <div class="metric-card glass-card">
-                    <div class="metric-label">Feels Like</div>
-                    <div id="feelsLike-full" class="metric-value">--°</div>
-                </div>
-                <div class="metric-card glass-card">
-                    <div class="metric-label">Humidity</div>
-                    <div id="humidity" class="metric-value">--%</div>
-                </div>
-                <div class="metric-card glass-card">
-                    <div class="metric-label">Wind</div>
-                    <div id="wind" class="metric-value">-- km/h</div>
-                </div>
-            </div>
-
-            <div class="metrics-row">
-                <div class="metric-card glass-card">
-                    <div class="metric-label">Pressure</div>
-                    <div id="pressure" class="metric-value">-- hPa</div>
-                </div>
-                <div class="metric-card glass-card">
-                    <div class="metric-label">Visibility</div>
-                    <div id="visibility" class="metric-value">--</div>
-                </div>
-                <div class="metric-card glass-card">
-                    <div class="metric-label">UV Index</div>
-                    <div id="uv" class="metric-value">--</div>
-                </div>
-            </div>
-
-            <div class="metrics-row">
-                <div class="metric-card glass-card">
-                    <div class="metric-label">🌅 Sunrise</div>
-                    <div id="sunrise" class="metric-value">--:--</div>
-                </div>
-                <div class="metric-card glass-card">
-                    <div class="metric-label">🌇 Sunset</div>
-                    <div id="sunset" class="metric-value">--:--</div>
-                </div>
-                <div class="metric-card glass-card">
-                    <div class="metric-label">Air Quality</div>
-                    <div id="aqiValue" class="metric-value">--</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Daily Forecast -->
-        <section class="daily-section glass-card">
-            <div class="section-header">
-                <h3 class="section-title">10-Day Forecast</h3>
-            </div>
-            <div id="dailyForecast" class="daily-list">
-            </div>
-        </section>
+            <!-- 5-Day Forecast -->
+            <section class="glass-card">
+                <h3>5-Day Forecast</h3>
+                <div id="dailyForecast" class="daily-grid"></div>
+            </section>
+        </main>
 
         <!-- Footer -->
         <footer class="app-footer">
-            <p>Powered by Open-Meteo API</p>
+            <p>Powered by Open-Meteo API • Data updates every 10 min</p>
         </footer>
     </div>
 
-    <!-- Loading Overlay -->
-    <div id="loading" class="loading-overlay hidden">
-        <div class="loader-glass">
-            <div class="loader-spinner"></div>
-            <p class="loader-text">Fetching weather...</p>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>
